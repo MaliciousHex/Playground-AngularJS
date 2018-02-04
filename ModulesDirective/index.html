@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Model an Data Bindings</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+</head>
+<body ng-app="testApp" ng-controller="testCtrl">
+	
+	<!-- <input type="text" ng-model="name" ng-init="name='Harry'">
+	<h1 ng-bind="name"></h1> -->
+	
+	<test-directive></test-directive>
+
+ 	<script type="text/javascript">
+ 		var app = angular.module("testApp",[]);
+
+ 		app.directive("testDirective", function () {
+ 			return {
+ 				restrict: 'EA',
+ 				template: "<h1>{{topic}} AngularJs Test!!</h1>"
+ 			}
+ 		})
+
+ 		app.controller("testCtrl",  function ($scope) {
+ 			$scope.topic = "Directive";	
+ 		})
+
+ 	</script>
+</body>
+</html>
