@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html ng-app="gemStore">
   <head>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </head>
+
   <body ng-controller="StoreController as store">
+    <!--  Store Header  -->
     <header>
       <h1 class="text-center">Flatlander Crafted Gems</h1>
       <h2 class="text-center">– an Angular store –</h2>
     </header>
+
+    <!--  Products Container  -->
     <div class="list-group">
+      <!--  Product Container  -->
       <div class="list-group-item" ng-repeat="product in store.products">
         <h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
+
+        <!-- Image Gallery  -->
         <div ng-controller="GalleryController as gallery"  ng-show="product.images.length">
           <div class="img-wrap">
             <img ng-src="{{product.images[gallery.current]}}" />
@@ -23,6 +30,8 @@
             </li>
           </ul>
         </div>
+
+        <!-- Product Tabs  -->
         <section ng-controller="TabController as tab">
           <ul class="nav nav-pills">
             <li ng-class="{ active:tab.isSet(1) }">
@@ -35,10 +44,14 @@
               <a href="" ng-click="tab.setTab(3)">Reviews</a>
             </li>
           </ul>
+
+          <!--  Description Tab's Content  -->
           <div ng-show="tab.isSet(1)">
             <h4>Description</h4>
             <blockquote>{{product.description}}</blockquote>
           </div>
+
+          <!--  Spec Tab's Content  -->
           <div ng-show="tab.isSet(2)">
             <h4>Specs</h4>
             <blockquote>Shine: {{product.shine}}</blockquote>
@@ -46,6 +59,7 @@
 
           <!--  Review Tab's Content  -->
           <div ng-show="tab.isSet(3)">
+
             <!--  Product Reviews List -->
             <ul>
               <h4>Reviews</h4>
@@ -53,10 +67,38 @@
                 <blockquote>
                   <strong>{{review.stars}} Stars</strong>
                   {{review.body}}
-                  <cite class="clearfix">{{review.author}}</cite>
+                  <cite class="clearfix">-{{review.author}}</cite>
                 </blockquote>
               </li>
             </ul>
+
+            <!--  Review Form -->
+            <form name="reviewForm">
+              <!--  Live Preview -->
+              <blockquote>
+                <strong> {{review.stars}} Stars</strong>
+                {{review.body}}
+                <cite class="clearfix">-{{review.author}}</cite>
+              </blockquote>
+
+              <!--  Review Form -->
+              <h4>Submit a Review</h4>
+              <fieldset class="form-group">
+                <select ng-model="review.stars" class="form-control" ng-options="stars for stars in [5,4,3,2,1]"  title="Stars">
+                  <option value="">Rate the Product</option>
+                </select>
+              </fieldset>
+              <fieldset class="form-group">
+                <textarea ng-model="review.body" class="form-control" placeholder="Write a short review of the product..." title="Review"></textarea>
+              </fieldset>
+              <fieldset class="form-group">
+                <input ng-model="review.author" type="email" class="form-control" placeholder="jimmyDean@example.org" title="Email" />
+              </fieldset>
+              <fieldset class="form-group">
+                <input type="submit" class="btn btn-primary pull-right" value="Submit Review" />
+              </fieldset>
+            </form>
+
           </div>
 
         </section>
